@@ -48,7 +48,7 @@ private class HttpClientConnection(connectCommander: ActorRef,
       // if sslEncryption is enabled we may need keepOpenOnPeerClosed
       tcpConnection ! Tcp.Register(self, keepOpenOnPeerClosed = connect.sslEncryption)
       context.watch(tcpConnection)
-      connectCommander ! connected
+      connectCommander ! self
       context.become(running(tcpConnection, pipelineStage, pipelineContext(connected)))
 
     case Tcp.CommandFailed(_: Tcp.Connect) ⇒
